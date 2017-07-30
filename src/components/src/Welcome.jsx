@@ -9,7 +9,7 @@ class Welcome extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: 'React Start Template',
+      message: 'React Starter Template',
     };
   }
   componentDidMount() {
