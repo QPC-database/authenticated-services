@@ -1,15 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 
 import App from './components/app.jsx';
-import reducers from './reducers';
+import colorsMiddleware from './middleware/colors.js';
+import colorsReducer from './reducers/colors.js';
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
+const rootMiddleware = [
+  colorsMiddleware,
+];
+
+const rootReducer = combineReducers({
+  colors: colorsReducer,
+});
+
+const store = createStore(
+  rootReducer,
+  applyMiddleware(
+    ...rootMiddleware,
+  ),
+);
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
+  <Provider store={store}>
     <App />
   </Provider>
-  , document.querySelector('#root'));
+  , document.querySelector('#root'),
+);
