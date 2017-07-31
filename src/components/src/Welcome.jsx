@@ -20,10 +20,10 @@ class Welcome extends React.Component {
     const { color } = this.props;
     return (
       <div className={styles.container}>
-        <div className={styles.message}>{message}</div>
         <div className={styles.loader}>
           <Loader size={'40'} color={color} />
         </div>
+        <div className={styles.message}>{message}</div>
       </div>
     );
   }
