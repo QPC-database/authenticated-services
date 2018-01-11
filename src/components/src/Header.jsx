@@ -1,4 +1,5 @@
 import React from 'react';
+import firebase from 'firebase';
 import Logo from '../../assets/logo.png';
 import styles from './Header.scss';
 
@@ -8,7 +9,10 @@ const Header = () => (
       <img src={Logo} alt="" />
     </div>
     <div className={styles.title}>Authenticated Services</div>
-    <div className={styles.menuBar}>Menu</div>
+    <div
+      className={styles.menuBar}
+      onClick={() => firebase.auth().signOut()}
+    >Logout</div>
   </div>
 );
 

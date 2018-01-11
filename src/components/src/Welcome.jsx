@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Loader from 'halogen/ringloader';
+import Loader from 'halogen/RingLoader';
 import * as api from '../../actions/colors.js';
 import styles from './Welcome.scss';
 

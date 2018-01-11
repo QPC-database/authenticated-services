@@ -15,7 +15,8 @@
     "import/no-extraneous-dependencies": "off",
     "import/no-dynamic-require": "off",
     "global-require": "off",
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "no-else-return": "off"
   },
   "env": {
     "browser": true

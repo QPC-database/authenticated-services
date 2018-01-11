@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import firebase from 'firebase';
 import Header from './src/Header.jsx';
-import Login from './src/Login.jsx';
+import Auth from './auth/Auth.jsx';
 import styles from './app.scss';
 
 // Initialize Firebase
@@ -17,22 +17,33 @@ const config = {
 firebase.initializeApp(config);
 
 class App extends React.Component {
-  componentDidMount() {
-    console.log(firebase.auth());
+  constructor(props) {
+    super(props);
+    this.state = {
+      auth: '',
+    };
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ auth: 'valid' });
+      } else {
+        this.setState({ auth: 'invalid' });
+      }
+    });
   }
   render() {
     const { children } = this.props;
-    const isLoggedIn = firebase.auth().currentUser;
-    let content;
-    if (isLoggedIn) {
+    let content = null;
+    if (this.state.auth === 'valid') {
       content = children;
-    } else {
-      content = <Login />;
+    } else if (this.state.auth === 'invalid') {
+      content = <Auth />;
     }
     return (
       <div className={styles.app}>
-        <Header isLoggedIn={isLoggedIn} />
-        {content}
+        <Header isLoggedIn={this.state.loggedIn} />
+        <div className={styles.body}>
+          {content}
+        </div>
       </div>
     );
   }

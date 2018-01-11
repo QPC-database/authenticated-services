@@ -23,16 +23,17 @@ class TextInput extends React.Component {
     this.props.onSubmit(this.state.value);
   }
   render() {
-    const { placeholder } = this.props;
+    const { className, placeholder, isPassword, isUppercase } = this.props;
     const { value } = this.state;
     return (
-      <div className={styles.field}>
+      <div className={`${className} ${styles.field}`}>
         <form onSubmit={this.onSubmit}>
           <input
-            type="text"
+            type={isPassword ? 'password' : 'text'}
             onChange={this.onChange}
             value={value}
             placeholder={placeholder}
+            data-uppercase={isUppercase}
           />
         </form>
       </div>
@@ -41,12 +42,18 @@ class TextInput extends React.Component {
 }
 
 TextInput.defaultProps = {
+  className: null,
+  isPassword: false,
+  isUppercase: false,
   onChange: () => null,
   onSubmit: () => null,
   placeholder: '',
 };
 
 TextInput.propTypes = {
+  className: PropTypes.string,
+  isPassword: PropTypes.bool,
+  isUppercase: PropTypes.bool,
   onChange: PropTypes.func,
   onSubmit: PropTypes.func,
   placeholder: PropTypes.string,
