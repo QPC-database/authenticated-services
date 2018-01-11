@@ -23,6 +23,9 @@ module.exports = {
       test: /^(?!.*?\.module).*\.css$/,
       use: ['style-loader', 'css-loader'],
     }, {
+      test: /\.(png|jpg)$/,
+      loader: 'url-loader?limit=8192',
+    }, {
       include: [path.resolve(__dirname, './src')],
       test: /\.(css|sass|scss)$/,
       use: [
