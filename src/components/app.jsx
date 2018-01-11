@@ -16,38 +16,14 @@ const config = {
 };
 firebase.initializeApp(config);
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      auth: '',
-    };
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({ auth: 'valid' });
-      } else {
-        this.setState({ auth: 'invalid' });
-      }
-    });
-  }
-  render() {
-    const { children } = this.props;
-    let content = null;
-    if (this.state.auth === 'valid') {
-      content = children;
-    } else if (this.state.auth === 'invalid') {
-      content = <Auth />;
-    }
-    return (
-      <div className={styles.app}>
-        <Header isLoggedIn={this.state.loggedIn} />
-        <div className={styles.body}>
-          {content}
-        </div>
-      </div>
-    );
-  }
-}
+const App = ({ children }) => (
+  <div className={styles.app}>
+    <Header />
+    <div className={styles.body}>
+      <Auth>{children}</Auth>
+    </div>
+  </div>
+);
 
 App.propTypes = {
   children: PropTypes.node.isRequired,

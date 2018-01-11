@@ -16,6 +16,8 @@ class Signup extends React.Component {
   }
   onSignup() {
     this.setState({ isLoading: true });
+
+    // Input data validation
     if (this.name.value === '') {
       return this.setState({
         error: 'Full name required',
@@ -33,6 +35,7 @@ class Signup extends React.Component {
       });
     }
 
+    // Check for service ID in database
     let hasId;
     return firebase.database().ref('/serviceIds/').once('value', (snapshot) => {
       hasId = snapshot.hasChild(`/${this.service.value}`);
@@ -45,9 +48,28 @@ class Signup extends React.Component {
     }).then(() => {
       if (hasId) {
         firebase.auth().createUserWithEmailAndPassword(this.email.value, this.password.value)
-          .then(() => {
-            console.log('success');
-            // TODO set user fields
+          .then((user) => {
+            // Update user display name
+            user.updateProfile({
+              displayName: this.name.value,
+            }).catch((error) => {
+              this.setState({ error });
+            });
+
+            // Send verification email
+            user.sendEmailVerification().catch((error) => {
+              this.setState({ error });
+            });
+
+            // Update user in database
+            firebase.database().ref(`/users/${user.uid}`).set({
+              name: this.name.value,
+              email: this.email.value,
+              company: this.company.value,
+              serviceId: this.service.value,
+            });
+
+            // Successful user creation
             this.setState({ error: '', isLoading: false });
           }).catch(error => this.setState({
             error: error.message,

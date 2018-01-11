@@ -13,6 +13,21 @@ class Signin extends React.Component {
       isLoading: false,
     };
     this.onSignin = this.onSignin.bind(this);
+    this.onResetPw = this.onResetPw.bind(this);
+  }
+  onResetPw() {
+    this.setState({ isLoading: true });
+    firebase.auth().sendPasswordResetEmail(this.email.value)
+      .then(() => {
+        this.setState({
+          isLoading: false,
+          error: 'Reset Email Sent',
+          forgotPw: false,
+        });
+      }).catch(error => this.setState({
+        error,
+        isLoading: false,
+      }));
   }
   onSignin() {
     this.setState({ isLoading: true });
@@ -22,6 +37,7 @@ class Signin extends React.Component {
       return this.setState({
         error: 'Email required',
         isLoading: false,
+        forgotPw: false,
       });
     } else if (password === '') {
       return this.setState({
@@ -32,7 +48,6 @@ class Signin extends React.Component {
 
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
-        console.log('signin success');
         this.setState({ error: '', isLoading: false });
       }).catch((error) => {
         if (error.code === 'auth/wrong-password') {
@@ -50,7 +65,7 @@ class Signin extends React.Component {
     return null;
   }
   render() {
-    const { error, isLoading } = this.state;
+    const { error, isLoading, forgotPw } = this.state;
     return (
       <div className={styles.content}>
         <div className={error !== '' ? styles.error : null}>
@@ -63,23 +78,37 @@ class Signin extends React.Component {
         <TextInput
           className={styles.input}
           placeholder={'Email'}
-          onSubmit={this.onSignin}
+          onSubmit={forgotPw ? this.onResetPw : this.onSignin}
           ref={(ref) => { this.email = ref; }}
         />
-        <TextInput
-          className={styles.input}
-          isPassword
-          placeholder={'Password'}
-          onSubmit={this.onSignin}
-          ref={(ref) => { this.password = ref; }}
-        />
+        {!forgotPw &&
+          <TextInput
+            className={styles.input}
+            isPassword
+            placeholder={'Password'}
+            onSubmit={this.onSignin}
+            ref={(ref) => { this.password = ref; }}
+          />
+        }
         {isLoading ?
           <Spinner />
           :
-          <Button
-            onClick={this.onSignin}
-            text={'Login'}
-          />
+          <div className={styles.buttons}>
+            <div
+              className={styles.forgotPw}
+              onClick={() => this.setState({ forgotPw: !forgotPw })}
+            >
+              {forgotPw ?
+                'Signin'
+                :
+                'Forgot your password?'
+              }
+            </div>
+            <Button
+              onClick={forgotPw ? this.onResetPw : this.onSignin}
+              text={forgotPw ? 'Reset' : 'Login'}
+            />
+          </div>
         }
       </div>
     );
