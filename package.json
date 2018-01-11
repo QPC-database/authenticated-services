@@ -4,6 +4,10 @@
   "main": "index.js",
   "author": "Zane Christenson",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zane-c/ReactStarterProject"
+  },
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --port 9090",
     "public": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --host 0.0.0.0 --port 9090",
@@ -15,7 +19,7 @@
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.4",
     "eslint": "^4.3.0",
