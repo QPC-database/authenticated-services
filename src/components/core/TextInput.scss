@@ -1,0 +1,15 @@
+.field {
+  input[type='text'] {
+    -webkit-appearance:none;
+    padding: 5px;
+    font-family: Verdana,sans-serif;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: none;
+    opacity: .9;
+    font-size: 15px;
+  }
+  input:focus {
+    outline: none;
+  }
+}

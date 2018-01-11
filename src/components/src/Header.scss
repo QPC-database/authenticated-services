@@ -1,0 +1,26 @@
+.container {
+  background: white;
+  border-bottom: 2px solid #eee;
+  font-size: 26px;
+  height: 64px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.logo {
+  padding: 0 20px;
+  img {
+    width: 35px;
+  }
+}
+
+.title {
+  flex: 1;
+}
+
+.menuBar {
+  font-size: 14px;
+  padding: 0 20px;
+  cursor: pointer;
+}

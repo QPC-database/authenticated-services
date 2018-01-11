@@ -1,0 +1,30 @@
+.container {
+  border: 1px solid lighten(#007AB5, 10);
+  color: #007AB5;
+  width: 100px;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 6px;
+  &:hover {
+    background: rgba(0, 0, 0, 0.03);
+  }
+  &:active {
+    background: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.container[data-disabled=true] {
+  border: 1px solid #ccc;
+  color: #ccc;
+  cursor: default;
+  &:hover {
+    background: rgba(255, 255, 255, 0);
+  }
+  &:active {
+    background: rgba(255, 255, 255, 0);
+  }
+}
+
+.text {
+  padding: 5px 10px;
+}
